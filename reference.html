@@ -1,0 +1,913 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Maya &amp; Daniel — September 19, 2026</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=Hanken+Grotesk:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #eae2d2;
+        --bg-card: #f3ede0;
+        --ink: #221c14;
+        --ink-soft: #6a5f4e;
+        --clay: #a24e2a;
+        --clay-soft: #c97a4f;
+        --line: rgba(34, 28, 20, 0.16);
+        --serif: "Fraunces", Georgia, serif;
+        --sans: "Hanken Grotesk", -apple-system, sans-serif;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        background: var(--bg);
+        color: var(--ink);
+        font-family: var(--sans);
+        font-weight: 400;
+        line-height: 1.6;
+        overflow-x: hidden;
+        -webkit-font-smoothing: antialiased;
+      }
+      /* grain overlay */
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        pointer-events: none;
+        opacity: 0.04;
+        mix-blend-mode: multiply;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      }
+      .label {
+        font-size: 0.72rem;
+        letter-spacing: 0.32em;
+        text-transform: uppercase;
+        font-weight: 500;
+        color: var(--clay);
+      }
+      .wrap {
+        max-width: 1120px;
+        margin: 0 auto;
+        padding: 0 32px;
+      }
+
+      /* ---------- NAV ---------- */
+      nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 22px 40px;
+        mix-blend-mode: difference;
+        color: #fff;
+        transition: opacity 0.4s;
+      }
+      nav .mono {
+        font-family: var(--serif);
+        font-style: italic;
+        font-size: 1.15rem;
+      }
+      nav .links {
+        display: flex;
+        gap: 30px;
+      }
+      nav a {
+        color: inherit;
+        text-decoration: none;
+        font-size: 0.78rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        opacity: 0.85;
+      }
+      nav a:hover {
+        opacity: 1;
+      }
+      @media (max-width: 720px) {
+        nav .links {
+          display: none;
+        }
+      }
+
+      /* ---------- HERO ---------- */
+      .hero {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        position: relative;
+        padding: 120px 24px 80px;
+      }
+      .hero .frame {
+        position: absolute;
+        inset: 24px;
+        border: 1px solid var(--line);
+        pointer-events: none;
+      }
+      .hero .eyebrow {
+        margin-bottom: 34px;
+        opacity: 0;
+        animation: up 0.9s 0.2s forwards;
+      }
+      .names {
+        font-family: var(--serif);
+        font-weight: 300;
+        font-size: clamp(3.4rem, 13vw, 9.5rem);
+        line-height: 0.9;
+        letter-spacing: -0.01em;
+      }
+      .names span {
+        display: block;
+      }
+      .names .l1 {
+        opacity: 0;
+        animation: up 1s 0.35s forwards;
+      }
+      .names .amp {
+        font-style: italic;
+        color: var(--clay);
+        font-size: clamp(2rem, 7vw, 5rem);
+        margin: 0.06em 0;
+        opacity: 0;
+        animation: up 1s 0.5s forwards;
+      }
+      .names .l2 {
+        opacity: 0;
+        animation: up 1s 0.65s forwards;
+      }
+      .hero .meta {
+        margin-top: 40px;
+        display: flex;
+        gap: 26px;
+        align-items: center;
+        font-size: 0.85rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--ink-soft);
+        opacity: 0;
+        animation: up 1s 0.9s forwards;
+      }
+      .hero .meta .dot {
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: var(--clay);
+      }
+      .scroll-cue {
+        position: absolute;
+        bottom: 46px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 0.66rem;
+        letter-spacing: 0.28em;
+        text-transform: uppercase;
+        color: var(--ink-soft);
+        opacity: 0;
+        animation: up 1s 1.2s forwards;
+      }
+      .scroll-cue::after {
+        content: "";
+        display: block;
+        width: 1px;
+        height: 42px;
+        background: var(--ink-soft);
+        margin: 14px auto 0;
+        animation: pulse 2s ease-in-out infinite;
+      }
+      @keyframes up {
+        from {
+          opacity: 0;
+          transform: translateY(26px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          transform: scaleY(0.4);
+          opacity: 0.4;
+          transform-origin: top;
+        }
+        50% {
+          transform: scaleY(1);
+          opacity: 1;
+          transform-origin: top;
+        }
+      }
+
+      /* ---------- COUNTDOWN ---------- */
+      .countdown {
+        background: var(--ink);
+        color: var(--bg);
+        padding: 90px 0;
+        text-align: center;
+      }
+      .countdown .label {
+        color: var(--clay-soft);
+      }
+      .cd-grid {
+        display: flex;
+        justify-content: center;
+        gap: clamp(24px, 6vw, 80px);
+        margin-top: 38px;
+        flex-wrap: wrap;
+      }
+      .cd-unit {
+        min-width: 70px;
+      }
+      .cd-num {
+        font-family: var(--serif);
+        font-weight: 300;
+        font-size: clamp(2.6rem, 7vw, 4.6rem);
+        line-height: 1;
+      }
+      .cd-lab {
+        font-size: 0.68rem;
+        letter-spacing: 0.24em;
+        text-transform: uppercase;
+        color: rgba(234, 226, 210, 0.55);
+        margin-top: 10px;
+      }
+
+      /* ---------- SECTION SHARED ---------- */
+      section.block {
+        padding: clamp(80px, 12vw, 150px) 0;
+      }
+      .reveal {
+        opacity: 0;
+        transform: translateY(34px);
+        transition:
+          opacity 1s cubic-bezier(0.2, 0.7, 0.2, 1),
+          transform 1s cubic-bezier(0.2, 0.7, 0.2, 1);
+      }
+      .reveal.in {
+        opacity: 1;
+        transform: none;
+      }
+      h2.head {
+        font-family: var(--serif);
+        font-weight: 300;
+        font-size: clamp(2.2rem, 5.5vw, 3.8rem);
+        line-height: 1.05;
+        letter-spacing: -0.01em;
+        margin: 18px 0 0;
+      }
+
+      /* ---------- STORY ---------- */
+      .story-grid {
+        display: grid;
+        grid-template-columns: 1fr 1.1fr;
+        gap: clamp(40px, 7vw, 90px);
+        align-items: center;
+      }
+      .story-img {
+        aspect-ratio: 4/5;
+        background:
+          linear-gradient(
+            135deg,
+            rgba(162, 78, 42, 0.12),
+            rgba(34, 28, 20, 0.05)
+          ),
+          var(--bg-card);
+        border: 1px solid var(--line);
+        position: relative;
+        overflow: hidden;
+      }
+      .story-img::after {
+        content: "Your photo here";
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.74rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--ink-soft);
+      }
+      .story-text p {
+        margin-top: 22px;
+        color: var(--ink-soft);
+        font-size: 1.05rem;
+        max-width: 44ch;
+      }
+      .story-text .sig {
+        font-family: var(--serif);
+        font-style: italic;
+        font-size: 1.5rem;
+        color: var(--ink);
+        margin-top: 30px;
+      }
+      @media (max-width: 760px) {
+        .story-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* ---------- DETAILS ---------- */
+      .details {
+        background: var(--bg-card);
+      }
+      .det-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+        margin-top: 54px;
+      }
+      .det-card {
+        border: 1px solid var(--line);
+        padding: 46px 40px;
+        background: var(--bg);
+        position: relative;
+      }
+      .det-card .num {
+        font-family: var(--serif);
+        font-style: italic;
+        color: var(--clay);
+        font-size: 1.1rem;
+      }
+      .det-card h3 {
+        font-family: var(--serif);
+        font-weight: 300;
+        font-size: 1.9rem;
+        margin: 14px 0 22px;
+      }
+      .det-card .row {
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 13px 0;
+        border-top: 1px solid var(--line);
+        font-size: 0.95rem;
+      }
+      .det-card .row span:first-child {
+        color: var(--ink-soft);
+        letter-spacing: 0.06em;
+      }
+      @media (max-width: 680px) {
+        .det-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* ---------- SCHEDULE ---------- */
+      .timeline {
+        margin-top: 54px;
+        max-width: 680px;
+      }
+      .tl-item {
+        display: grid;
+        grid-template-columns: 120px 1fr;
+        gap: 32px;
+        padding: 26px 0;
+        border-top: 1px solid var(--line);
+        align-items: baseline;
+      }
+      .tl-item:last-child {
+        border-bottom: 1px solid var(--line);
+      }
+      .tl-time {
+        font-family: var(--serif);
+        font-style: italic;
+        color: var(--clay);
+        font-size: 1.2rem;
+      }
+      .tl-item h4 {
+        font-size: 1.15rem;
+        font-weight: 500;
+      }
+      .tl-item p {
+        color: var(--ink-soft);
+        font-size: 0.92rem;
+        margin-top: 4px;
+      }
+      @media (max-width: 560px) {
+        .tl-item {
+          grid-template-columns: 1fr;
+          gap: 6px;
+        }
+      }
+
+      /* ---------- RSVP CTA ---------- */
+      .rsvp {
+        background: var(--ink);
+        color: var(--bg);
+        text-align: center;
+      }
+      .rsvp .head {
+        color: var(--bg);
+      }
+      .rsvp .label {
+        color: var(--clay-soft);
+      }
+      .rsvp .sub {
+        color: rgba(234, 226, 210, 0.6);
+        margin: 18px auto 0;
+        max-width: 46ch;
+      }
+      .rsvp .cta-wrap {
+        margin-top: 44px;
+      }
+
+      /* ---------- MODAL ---------- */
+      .modal-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 1000;
+        background: rgba(20, 16, 11, 0.55);
+        backdrop-filter: blur(4px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+        opacity: 0;
+        visibility: hidden;
+        transition:
+          opacity 0.35s,
+          visibility 0.35s;
+      }
+      .modal-overlay.open {
+        opacity: 1;
+        visibility: visible;
+      }
+      .modal {
+        background: var(--ink);
+        color: var(--bg);
+        width: 100%;
+        max-width: 560px;
+        max-height: 90vh;
+        overflow-y: auto;
+        padding: clamp(34px, 5vw, 56px);
+        position: relative;
+        border: 1px solid rgba(234, 226, 210, 0.18);
+        transform: translateY(24px) scale(0.97);
+        transition: transform 0.4s cubic-bezier(0.2, 0.7, 0.2, 1);
+      }
+      .modal-overlay.open .modal {
+        transform: none;
+      }
+      .modal .label {
+        color: var(--clay-soft);
+      }
+      .modal h3 {
+        font-family: var(--serif);
+        font-weight: 300;
+        font-size: clamp(1.8rem, 5vw, 2.6rem);
+        margin: 14px 0 6px;
+        line-height: 1.05;
+      }
+      .modal .sub {
+        color: rgba(234, 226, 210, 0.6);
+        margin: 0 0 8px;
+        max-width: 40ch;
+      }
+      .modal-close {
+        position: absolute;
+        top: 20px;
+        right: 22px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: rgba(234, 226, 210, 0.6);
+        font-size: 1.5rem;
+        line-height: 1;
+        transition: color 0.3s;
+      }
+      .modal-close:hover {
+        color: var(--clay-soft);
+      }
+      .form {
+        margin-top: 30px;
+        max-width: 580px;
+      }
+      .field {
+        margin-bottom: 26px;
+      }
+      .field label {
+        display: block;
+        font-size: 0.7rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: rgba(234, 226, 210, 0.55);
+        margin-bottom: 10px;
+      }
+      .field input,
+      .field select,
+      .field textarea {
+        width: 100%;
+        background: transparent;
+        border: none;
+        border-bottom: 1px solid rgba(234, 226, 210, 0.28);
+        color: var(--bg);
+        font-family: var(--sans);
+        font-size: 1.05rem;
+        padding: 10px 0;
+        transition: border-color 0.3s;
+      }
+      .field input:focus,
+      .field select:focus,
+      .field textarea:focus {
+        outline: none;
+        border-color: var(--clay-soft);
+      }
+      .field select {
+        cursor: pointer;
+      }
+      .field select option {
+        background: var(--ink);
+        color: var(--bg);
+      }
+      .field-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 26px;
+      }
+      @media (max-width: 560px) {
+        .field-row {
+          grid-template-columns: 1fr;
+        }
+      }
+      .btn {
+        margin-top: 14px;
+        background: var(--clay);
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        padding: 17px 42px;
+        font-family: var(--sans);
+        font-size: 0.78rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        font-weight: 500;
+        transition:
+          background 0.3s,
+          transform 0.3s;
+      }
+      .btn:hover {
+        background: var(--clay-soft);
+        transform: translateY(-2px);
+      }
+      .thanks {
+        display: none;
+        margin-top: 40px;
+        padding: 34px;
+        border: 1px solid rgba(234, 226, 210, 0.25);
+        text-align: center;
+      }
+      .thanks.show {
+        display: block;
+        animation: up 0.7s forwards;
+      }
+      .thanks .big {
+        font-family: var(--serif);
+        font-style: italic;
+        font-size: 1.8rem;
+        color: var(--clay-soft);
+      }
+
+      /* ---------- FOOTER ---------- */
+      footer {
+        text-align: center;
+        padding: 80px 24px 56px;
+      }
+      footer .amp-big {
+        font-family: var(--serif);
+        font-style: italic;
+        font-size: 3rem;
+        color: var(--clay);
+      }
+      footer .tag {
+        margin-top: 18px;
+        font-size: 0.78rem;
+        letter-spacing: 0.24em;
+        text-transform: uppercase;
+        color: var(--ink-soft);
+      }
+      footer .hash {
+        margin-top: 30px;
+        font-family: var(--serif);
+        font-size: 1.3rem;
+      }
+    </style>
+  </head>
+  <body>
+    <nav id="nav">
+      <div class="mono">M &amp; D</div>
+      <div class="links">
+        <a href="#story">Story</a>
+        <a href="#details">Details</a>
+        <a href="#schedule">Schedule</a>
+        <a href="#rsvp">RSVP</a>
+      </div>
+    </nav>
+
+    <!-- HERO -->
+    <header class="hero">
+      <div class="frame"></div>
+      <div class="label eyebrow">Together with their families</div>
+      <h1 class="names">
+        <span class="l1">Maya</span>
+        <span class="amp">&amp;</span>
+        <span class="l2">Daniel</span>
+      </h1>
+      <div class="meta">
+        <span>19 . 09 . 2026</span>
+        <span class="dot"></span>
+        <span>Cagayan de Oro</span>
+      </div>
+      <div class="scroll-cue">Scroll</div>
+    </header>
+
+    <!-- COUNTDOWN -->
+    <section class="countdown">
+      <div class="wrap">
+        <div class="label">Counting down to forever</div>
+        <div class="cd-grid" id="cd">
+          <div class="cd-unit">
+            <div class="cd-num" id="d">00</div>
+            <div class="cd-lab">Days</div>
+          </div>
+          <div class="cd-unit">
+            <div class="cd-num" id="h">00</div>
+            <div class="cd-lab">Hours</div>
+          </div>
+          <div class="cd-unit">
+            <div class="cd-num" id="m">00</div>
+            <div class="cd-lab">Minutes</div>
+          </div>
+          <div class="cd-unit">
+            <div class="cd-num" id="s">00</div>
+            <div class="cd-lab">Seconds</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STORY -->
+    <section class="block" id="story">
+      <div class="wrap">
+        <div class="story-grid">
+          <div class="story-img reveal"></div>
+          <div class="story-text reveal">
+            <div class="label">Our story</div>
+            <h2 class="head">
+              It started with a rainy afternoon and a shared umbrella.
+            </h2>
+            <p>
+              Five years, three cities, and one very persistent stray cat later,
+              we decided the only thing left to do was promise each other the
+              rest.
+            </p>
+            <p>
+              We would be honoured to have you with us as we say "I do" —
+              surrounded by the people who shaped the story along the way.
+            </p>
+            <div class="sig">— Maya &amp; Daniel</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DETAILS -->
+    <section class="block details" id="details">
+      <div class="wrap">
+        <div class="reveal" style="text-align: center">
+          <div class="label">The day</div>
+          <h2 class="head">Saturday, September 19th, 2026</h2>
+        </div>
+        <div class="det-grid">
+          <div class="det-card reveal">
+            <div class="num">01</div>
+            <h3>The Ceremony</h3>
+            <div class="row">
+              <span>Time</span><span>3:30 in the afternoon</span>
+            </div>
+            <div class="row">
+              <span>Venue</span><span>St. Augustine Cathedral</span>
+            </div>
+            <div class="row">
+              <span>Address</span><span>Hayes St, Cagayan de Oro</span>
+            </div>
+            <div class="row">
+              <span>Dress</span><span>Formal / Garden</span>
+            </div>
+          </div>
+          <div class="det-card reveal">
+            <div class="num">02</div>
+            <h3>The Reception</h3>
+            <div class="row">
+              <span>Time</span><span>6:00 in the evening</span>
+            </div>
+            <div class="row">
+              <span>Venue</span><span>Seda Centrio Ballroom</span>
+            </div>
+            <div class="row">
+              <span>Address</span><span>Corrales Ave, Cagayan de Oro</span>
+            </div>
+            <div class="row">
+              <span>Dress</span><span>Cocktail attire</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCHEDULE -->
+    <section class="block" id="schedule">
+      <div class="wrap">
+        <div class="reveal">
+          <div class="label">Order of the day</div>
+          <h2 class="head">How the evening unfolds</h2>
+        </div>
+        <div class="timeline">
+          <div class="tl-item reveal">
+            <div class="tl-time">3:30</div>
+            <div>
+              <h4>Guests Arrive</h4>
+              <p>Find your seat as the strings begin to play.</p>
+            </div>
+          </div>
+          <div class="tl-item reveal">
+            <div class="tl-time">4:00</div>
+            <div>
+              <h4>Ceremony</h4>
+              <p>The vows, the rings, the happy tears.</p>
+            </div>
+          </div>
+          <div class="tl-item reveal">
+            <div class="tl-time">5:00</div>
+            <div>
+              <h4>Cocktails &amp; Photos</h4>
+              <p>Golden hour, canapés, and a glass to toast.</p>
+            </div>
+          </div>
+          <div class="tl-item reveal">
+            <div class="tl-time">6:00</div>
+            <div>
+              <h4>Dinner Reception</h4>
+              <p>Dinner, speeches, and far too much cake.</p>
+            </div>
+          </div>
+          <div class="tl-item reveal">
+            <div class="tl-time">8:30</div>
+            <div>
+              <h4>First Dance &amp; Party</h4>
+              <p>The floor is open until the lights come up.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RSVP CTA -->
+    <section class="block rsvp" id="rsvp">
+      <div class="wrap">
+        <div class="reveal">
+          <div class="label">Will you join us?</div>
+          <h2 class="head">RSVP</h2>
+          <p class="sub">
+            Kindly respond by the 1st of August, 2026 so we can save you a seat.
+          </p>
+          <div class="cta-wrap">
+            <button class="btn" id="open-rsvp">Reply to our invitation</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RSVP MODAL -->
+    <div class="modal-overlay" id="rsvp-modal">
+      <div
+        class="modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modal-title"
+      >
+        <button class="modal-close" id="close-rsvp" aria-label="Close">
+          &times;
+        </button>
+        <div class="label">Will you join us?</div>
+        <h3 id="modal-title">RSVP</h3>
+        <p class="sub">We'd love to know if you can make it.</p>
+        <div class="form">
+          <div class="field">
+            <label>Full name</label
+            ><input type="text" id="r-name" placeholder="Your name" />
+          </div>
+          <div class="field">
+            <label>Will you attend?</label>
+            <select id="r-attend">
+              <option value="">Choose…</option>
+              <option>Joyfully accepts</option>
+              <option>Regretfully declines</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Anything we should know? (allergies, song requests…)</label
+            ><textarea id="r-note" rows="2" placeholder="Optional"></textarea>
+          </div>
+          <button class="btn" id="r-submit">Send Response</button>
+          <div class="thanks" id="thanks">
+            <div class="big">Thank you!</div>
+            <p style="margin-top: 10px; color: rgba(234, 226, 210, 0.7)">
+              Your response has been noted. We can't wait to celebrate with you.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <div class="amp-big">&amp;</div>
+      <div class="tag">
+        Maya &amp; Daniel · 19 September 2026 · Cagayan de Oro
+      </div>
+      <div class="hash">#MeantToBeMandD</div>
+    </footer>
+
+    <script>
+      // Countdown — change this date to your wedding date/time
+      const target = new Date("2026-09-19T15:30:00+08:00").getTime();
+      const pad = (n) => String(n).padStart(2, "0");
+      function tick() {
+        const diff = target - Date.now();
+        if (diff <= 0) {
+          document.getElementById("cd").innerHTML =
+            '<div class="cd-num" style="font-style:italic">The day is here</div>';
+          return;
+        }
+        const d = Math.floor(diff / 86400000);
+        const h = Math.floor((diff % 86400000) / 3600000);
+        const m = Math.floor((diff % 3600000) / 60000);
+        const s = Math.floor((diff % 60000) / 1000);
+        document.getElementById("d").textContent = pad(d);
+        document.getElementById("h").textContent = pad(h);
+        document.getElementById("m").textContent = pad(m);
+        document.getElementById("s").textContent = pad(s);
+      }
+      tick();
+      setInterval(tick, 1000);
+
+      // Scroll reveal
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e, i) => {
+            if (e.isIntersecting) {
+              setTimeout(() => e.target.classList.add("in"), (i % 3) * 90);
+              io.unobserve(e.target);
+            }
+          });
+        },
+        { threshold: 0.18 },
+      );
+      document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+
+      // RSVP modal open/close
+      const modal = document.getElementById("rsvp-modal");
+      const openModal = () => modal.classList.add("open");
+      const closeModal = () => modal.classList.remove("open");
+      document.getElementById("open-rsvp").addEventListener("click", openModal);
+      document
+        .getElementById("close-rsvp")
+        .addEventListener("click", closeModal);
+      modal.addEventListener("click", (e) => {
+        if (e.target === modal) closeModal();
+      });
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") closeModal();
+      });
+
+      // RSVP (front-end only — connect to a form service to actually receive responses)
+      document.getElementById("r-submit").addEventListener("click", () => {
+        const name = document.getElementById("r-name").value.trim();
+        const attend = document.getElementById("r-attend").value;
+        if (!name || !attend) {
+          alert("Please add your name and let us know if you can make it.");
+          return;
+        }
+        document.getElementById("thanks").classList.add("show");
+        document.getElementById("r-submit").style.display = "none";
+      });
+    </script>
+  </body>
+</html>
