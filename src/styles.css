@@ -1,1 +1,15 @@
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=Hanken+Grotesk:wght@300;400;500;600&display=swap");
 @import "tailwindcss";
+
+@theme {
+  --font-sans: "Hanken Grotesk", sans-serif;
+  --font-serif: "Fraunces", Georgia, serif;
+
+  --color-background: #eae2d2; /* warm bone — page background */
+  --color-bg-card: #f3ede0; /* lighter cream — cards/sections */
+  --color-ink: #221c14; /* deep warm black — text, dark sections */
+  --color-ink-soft: #6a5f4e; /* muted brown — secondary text */
+  --color-clay: #a24e2a; /* terracotta — primary accent */
+  --color-clay-soft: #c97a4f; /* lighter clay — hover/highlights */
+  --color-line: #221c14; /* hairline borders (use with opacity) */
+}
